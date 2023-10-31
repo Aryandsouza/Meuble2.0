@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Meuble - Fast and Convenient File Sharing</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        .features {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            width: 30%;
+            padding: 20px;
+            background-color: rgb(188, 187, 187);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 10px;
+        }
+
+        .feature h2 {
+            font-size: 24px;
+        }
+
+        .feature p {
+            font-size: 18px;
+        }
+
+        #bottom-right-image {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            z-index: 999; /* To ensure it's above other content */
+        }
+
+        /* Style for the upload button and choose file button */
+        #upload-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Add some spacing between the buttons */
+        #upload-buttons button {
+            margin-top: 10px;
+        }
+
+        /* Styles for the progress bar */
+        #progress-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #progress-bar-container {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 10px;
+            background-color: #ccc;
+            border: 1px solid #333;
+            position: relative;
+            height: 20px;
+            display: none;
+        }
+
+        #inner-bar {
+            height: 100%;
+            width: 0;
+            background-color: #4CAF50;
+        }
+
+        #file-size {
+            margin-top: 10px;
+        }
+
+        /* Style for the shareable link and copy button */
+        #shareable-link {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #copy-button {
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo"></div>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="privacypolicy.html" target="_blank">Privacy Policy</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="hero">
+        <h1>Fast and Convenient File Sharing</h1>
+        <p>Share files and links hassle-free with Meuble.</p>
+        <!-- Add file input for the user to select a file -->
+        <input type="file" id="fileInput" style="display: none;">
+        <div id="upload-buttons" style="display: flex; flex-direction: column; align-items: center;">
+            <button id="chooseFileButton">Choose File</button>
+            <button id="uploadFileButton" style="display: none;">Upload File</button>
+            <!-- Display shareable link and copy button -->
+            <div id="shareable-link">Shareable Link: <a href="#" id="downloadLink" target="_blank">Download Link</a></div>
+            <button id="copy-button" onclick="copyDownloadLink()" style="display: none;">Copy Link</button>
+        </div>
+        <!-- Progress bar and file size display -->
+        <div id="progress-container">
+            <div id="file-size">File Size: <span id="fileSizeDisplay">0 MB</span></div>
+            <div id="progress-bar-container">
+                <div id="inner-bar"></div>
+            </div>
+        </div>
+    </section>
+    <section class="features">
+        <div class="feature">
+            <h2>No Login/Signup Required</h2>
+            <p>Start sharing instantly, no registration needed.</p>
+        </div>
+        <div class="feature">
+            <h2>Lightning Fast Transfers</h2>
+            <p>Swift uploading and downloading for maximum productivity.</p>
+        </div>
+        <div class="feature">
+            <h2>Versatile Sharing Options</h2>
+            <p>Share documents, images, videos, or URLs effortlessly.</p>
+        </div>
+    </section>
+    <section class="testimonials">
+        <!-- Testimonial sections and graphics go here -->
+    </section>
+    <footer>
+        <ul>
+            <li><a href="privacypolicy.html" target="_blank">Privacy Policy</a></li>
+            <li><a href="terms_of_service.html" target="_blank">Terms Of Service </a></li>
+            <li><a href="contact_us.html" target="_blank">Contact Us</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        // Function to handle file selection and show the upload button
+        document.getElementById('chooseFileButton').addEventListener('click', function () {
+            document.getElementById('fileInput').click();
+        });
+
+        // Attach a change event to the file input
+        document.getElementById('fileInput').addEventListener('change', function () {
+            document.getElementById('uploadFileButton').style.display = 'block';
+            var fileSize = (this.files[0].size / (1024 * 1024)).toFixed(2);
+            document.getElementById('fileSizeDisplay').textContent = fileSize + ' MB';
+        });
+
+        // Function to generate and display the shareable link
+        function generateShareableLink() {
+            // You can generate the link based on your requirements here
+            var link = 'https://example.com/download/' + Math.random().toString(36).substring(2);
+            document.getElementById('downloadLink').href = link;
+            document.getElementById('shareable-link').style.display = 'block';
+            document.getElementById('copy-button').style.display = 'block';
+        }
+
+        // Function to copy the shareable link
+        function copyDownloadLink() {
+            var link = document.getElementById('downloadLink').href;
+            var tempInput = document.createElement('input');
+            document.body.appendChild(tempInput);
+            tempInput.setAttribute('value', link);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            alert('Link copied to clipboard: ' + link);
+        }
+
+        // Attach a click event to the Upload File button
+        document.getElementById('uploadFileButton').addEventListener('click', function () {
+            generateShareableLink();
+        });
+    </script>
+
+    
+</body>
+
+</html>
